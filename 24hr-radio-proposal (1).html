@@ -1,0 +1,460 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>24 Hour Radio Station — Project Proposal</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=DM+Mono:wght@300;400;500&family=Crimson+Pro:ital,wght@0,300;0,400;1,300&display=swap" rel="stylesheet"/>
+  <style>
+    :root {
+      --cream: #f5f0e8;
+      --warm-white: #faf8f4;
+      --brown: #3b2a1a;
+      --rust: #b5451b;
+      --gold: #c89a3c;
+      --muted: #7a6a58;
+      --border: #d6cbb8;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      background-color: var(--cream);
+      color: var(--brown);
+      font-family: 'Crimson Pro', serif;
+      font-size: 19px;
+      line-height: 1.75;
+    }
+
+    /* ── HERO ── */
+    .hero {
+      background-color: var(--brown);
+      color: var(--cream);
+      padding: 80px 60px 60px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: -60px; right: -60px;
+      width: 360px; height: 360px;
+      border-radius: 50%;
+      border: 80px solid rgba(200,154,60,0.12);
+      pointer-events: none;
+    }
+
+    .hero::after {
+      content: '';
+      position: absolute;
+      bottom: -40px; left: 40px;
+      width: 220px; height: 220px;
+      border-radius: 50%;
+      border: 50px solid rgba(181,69,27,0.15);
+      pointer-events: none;
+    }
+
+    .badge {
+      display: inline-block;
+      font-family: 'DM Mono', monospace;
+      font-size: 11px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--gold);
+      border: 1px solid var(--gold);
+      padding: 4px 14px;
+      border-radius: 2px;
+      margin-bottom: 28px;
+    }
+
+    .hero h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(38px, 6vw, 72px);
+      font-weight: 700;
+      line-height: 1.1;
+      max-width: 700px;
+      margin-bottom: 20px;
+    }
+
+    .hero h1 em {
+      font-style: italic;
+      color: var(--gold);
+    }
+
+    .hero-sub {
+      font-size: 18px;
+      font-weight: 300;
+      color: rgba(245,240,232,0.75);
+      max-width: 520px;
+      font-style: italic;
+    }
+
+    /* ── LAYOUT ── */
+    .container {
+      max-width: 880px;
+      margin: 0 auto;
+      padding: 0 40px;
+    }
+
+    section {
+      padding: 64px 0 40px;
+      border-bottom: 1px solid var(--border);
+    }
+    section:last-of-type { border-bottom: none; }
+
+    .section-label {
+      font-family: 'DM Mono', monospace;
+      font-size: 10px;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--rust);
+      margin-bottom: 14px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .section-label::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: var(--border);
+    }
+
+    h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(24px, 3.5vw, 36px);
+      font-weight: 700;
+      margin-bottom: 22px;
+      line-height: 1.2;
+    }
+
+    h3 {
+      font-family: 'Playfair Display', serif;
+      font-size: 22px;
+      font-weight: 400;
+      font-style: italic;
+      margin-bottom: 10px;
+      color: var(--brown);
+    }
+
+    p { margin-bottom: 16px; color: #4a3825; }
+    p:last-child { margin-bottom: 0; }
+
+    /* ── QUOTE BLOCK ── */
+    blockquote {
+      border-left: 3px solid var(--gold);
+      padding: 20px 28px;
+      margin: 32px 0;
+      background: var(--warm-white);
+      font-style: italic;
+      font-size: 20px;
+      color: var(--brown);
+    }
+
+    /* ── PHASES ── */
+    .phases { display: flex; flex-direction: column; gap: 24px; margin-top: 10px; }
+
+    .phase-card {
+      display: grid;
+      grid-template-columns: 56px 1fr;
+      gap: 20px;
+      align-items: start;
+      background: var(--warm-white);
+      border: 1px solid var(--border);
+      padding: 24px 28px;
+      border-radius: 2px;
+      transition: border-color 0.2s;
+    }
+    .phase-card:hover { border-color: var(--gold); }
+
+    .phase-num {
+      font-family: 'DM Mono', monospace;
+      font-size: 11px;
+      letter-spacing: 0.1em;
+      color: var(--gold);
+      font-weight: 500;
+      padding-top: 4px;
+      text-align: center;
+    }
+
+    .phase-num span {
+      display: block;
+      font-size: 32px;
+      font-family: 'Playfair Display', serif;
+      letter-spacing: 0;
+      line-height: 1;
+      margin-bottom: 2px;
+    }
+
+    /* ── OBSTACLES ── */
+    .obstacles { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-top: 10px; }
+
+    @media (max-width: 600px) { .obstacles { grid-template-columns: 1fr; } }
+
+    .obstacle {
+      background: var(--warm-white);
+      border: 1px solid var(--border);
+      padding: 22px 24px;
+      border-radius: 2px;
+      border-top: 3px solid var(--rust);
+    }
+
+    .obstacle h4 {
+      font-family: 'DM Mono', monospace;
+      font-size: 11px;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--rust);
+      margin-bottom: 8px;
+    }
+
+    /* ── THEME ── */
+    .theme-box {
+      background: var(--brown);
+      color: var(--cream);
+      padding: 40px 44px;
+      margin-top: 10px;
+      border-radius: 2px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .theme-box::before {
+      content: '"';
+      position: absolute;
+      top: -20px; right: 24px;
+      font-family: 'Playfair Display', serif;
+      font-size: 200px;
+      color: rgba(200,154,60,0.08);
+      line-height: 1;
+      pointer-events: none;
+    }
+
+    .theme-box h3 {
+      color: var(--gold);
+      font-style: normal;
+      font-size: 13px;
+      font-family: 'DM Mono', monospace;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      margin-bottom: 14px;
+    }
+
+    .theme-box p {
+      color: rgba(245,240,232,0.88);
+      font-size: 20px;
+      font-style: italic;
+      max-width: 580px;
+    }
+
+    /* ── DELIVERABLES ── */
+    .deliverables {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+      gap: 16px;
+      margin-top: 10px;
+    }
+
+    .deliverable {
+      background: var(--warm-white);
+      border: 1px solid var(--border);
+      padding: 18px 20px;
+      border-radius: 2px;
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+    }
+
+    .deliverable-icon {
+      width: 32px;
+      height: 32px;
+      background: var(--cream);
+      border: 1px solid var(--border);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      font-size: 14px;
+    }
+
+    .deliverable p {
+      font-size: 16px;
+      margin: 0;
+      color: var(--brown);
+    }
+
+    /* ── FOOTER ── */
+    footer {
+      background: var(--brown);
+      color: rgba(245,240,232,0.5);
+      text-align: center;
+      padding: 32px;
+      font-family: 'DM Mono', monospace;
+      font-size: 11px;
+      letter-spacing: 0.12em;
+    }
+    footer strong { color: var(--gold); }
+  </style>
+</head>
+<body>
+
+  <!-- HERO -->
+  <div class="hero">
+    <div class="badge">Project Proposal</div>
+    <h1>24 Hour <em>Radio</em><br/>Station</h1>
+    <p class="hero-sub">A son fulfills his father's dream — one broadcast at a time.</p>
+  </div>
+
+  <div class="container">
+
+    <!-- OVERVIEW -->
+    <section>
+      <div class="section-label">Overview</div>
+      <h2>The Story Behind the Tower</h2>
+      <p>
+        Decades ago, a father, Tom Donahue dreamed of building a Catholic radio station — so much so that he bought a property with a 100-foot ham radio tower in the front yard. Life intervened. The tower stood silent.
+      </p>
+      <blockquote>
+        "It ended up being their son, John, who went into Catholic media — in a certain sense, they still did build their Catholic radio station."
+      </blockquote>
+      <p>
+        This project finally makes that dream real: a 24-hour temporary FM broadcast from that same tower, culminating in a father-and-son podcast filmed at sunset.
+      </p>
+    </section>
+
+    <!-- PHASES -->
+    <section>
+      <div class="section-label">Structure</div>
+      <h2>Project Phases</h2>
+      <div class="phases">
+
+        <div class="phase-card">
+          <div class="phase-num"><span>01</span>PHASE</div>
+          <div>
+            <h3>Research & Legal Framework</h3>
+            <p>Obtain a temporary FM broadcast license and determine the maximum legal transmission wattage for a short-term low-power event.</p>
+          </div>
+        </div>
+
+        <div class="phase-card">
+          <div class="phase-num"><span>02</span>PHASE</div>
+          <div>
+            <h3>EWTN Partnership Outreach</h3>
+            <p>Contact EWTN to get guidance on short-term FM broadcasting and request permission to air their Catholic programming during the 24-hour window.</p>
+          </div>
+        </div>
+
+        <div class="phase-card">
+          <div class="phase-num"><span>03</span>PHASE</div>
+          <div>
+            <h3>Hardware Acquisition & Setup</h3>
+            <p>Source and install FM transmission equipment on the existing 100-foot tower. Test signal and confirm everything is operational before go-live.</p>
+          </div>
+        </div>
+
+        <div class="phase-card">
+          <div class="phase-num"><span>04</span>PHASE</div>
+          <div>
+            <h3>The 24-Hour Broadcast</h3>
+            <p>Run the live FM broadcast and document the full experience on camera — including real-time obstacles and the moment the tower finally fulfills its purpose.</p>
+          </div>
+        </div>
+
+        <div class="phase-card">
+          <div class="phase-num"><span>05</span>PHASE</div>
+          <div>
+            <h3>Sunset Podcast with Dad</h3>
+            <p>At the close of the broadcast, sit down at sunset for a candid recorded conversation about the radio dream, fatherhood, and Catholic family life.</p>
+          </div>
+        </div>
+
+        <div class="phase-card">
+          <div class="phase-num"><span>06</span>PHASE</div>
+          <div>
+            <h3>On-Camera Conclusion</h3>
+            <p>A personal closing reflection on what the project revealed — especially the things learned for the first time in conversation with Dad.</p>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- OBSTACLES -->
+    <section>
+      <div class="section-label">Challenges</div>
+      <h2>Anticipated Obstacles</h2>
+      <div class="obstacles">
+
+        <div class="obstacle">
+          <h4>Legal Licensing</h4>
+          <p>Navigating FCC requirements for a temporary FM broadcast and determining the correct license and wattage limits.</p>
+        </div>
+
+        <div class="obstacle">
+          <h4>24 Hours of Content</h4>
+          <p>Filling a full broadcast requires a deep content library — hopefully solved through an EWTN programming agreement.</p>
+        </div>
+
+        <div class="obstacle">
+          <h4>Hardware Setup</h4>
+          <p>Sourcing FM transmitter equipment compatible with the existing tower and getting it tested and operational in time.</p>
+        </div>
+
+
+
+      </div>
+    </section>
+
+    <!-- THEME -->
+    <section>
+      <div class="section-label">Through Line</div>
+      <h2>The Heart of the Project</h2>
+      <div class="theme-box">
+        <h3>Central Theme</h3>
+        <p>
+          Tom's primary vocation is husband and father — above any ambition or dream. This project is about magnanimity: the greatness of soul that ultimately enables sacrificial love and putting your family first. A tower silent for decades becomes, at last, proof of that truth.
+        </p>
+      </div>
+    </section>
+
+    <!-- DELIVERABLES -->
+    <section>
+      <div class="section-label">Outputs</div>
+      <div class="deliverables">
+        <div class="deliverable">
+          <div class="deliverable-icon">📻</div>
+          <p>Completed 24-hour FM radio broadcast</p>
+        </div>
+        <div class="deliverable">
+          <div class="deliverable-icon">🎙️</div>
+          <p>Father-son podcast recording</p>
+        </div>
+        <div class="deliverable">
+          <div class="deliverable-icon">🎬</div>
+          <p>Long-form YouTube style episode</p>
+        </div>
+        <div class="deliverable">
+          <div class="deliverable-icon">✝️</div>
+          <p>EWTN partnership & content agreement</p>
+        </div>
+        <div class="deliverable">
+          <div class="deliverable-icon">📋</div>
+          <p>FCC temporary broadcast documentation</p>
+        </div>
+        <div class="deliverable">
+          <div class="deliverable-icon">🏗️</div>
+          <p>Operational FM transmitter on existing tower</p>
+        </div>
+      </div>
+    </section>
+
+  </div>
+
+  <footer>
+    <strong>24 Hour Radio Station</strong> &nbsp;·&nbsp; Project Proposal &nbsp;·&nbsp; Catholic Media
+  </footer>
+
+</body>
+</html>
